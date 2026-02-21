@@ -1,2 +1,89 @@
 @import "tailwindcss";
 
+body {
+  font-family: var(--font-sans);
+}
+
+@theme {
+  --color-stone-950: #0c0a09;
+  --color-stone-900: #1c1917;
+  --color-stone-850: #231f1c;
+  --color-stone-800: #292524;
+  --color-stone-700: #44403c;
+  --color-stone-600: #57534e;
+  --color-stone-500: #78716c;
+  --color-stone-400: #a8a29e;
+  --color-stone-300: #d6d3d1;
+  --color-stone-200: #e7e5e4;
+  --color-stone-100: #f5f5f4;
+  --color-stone-50: #fafaf9;
+
+  --color-amber-400: #fbbf24;
+  --color-amber-300: #fcd34d;
+  --color-amber-500: #f59e0b;
+
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-950: #022c22;
+  --color-emerald-900: #064e3b;
+
+  --color-rose-400: #fb7185;
+  --color-rose-500: #f43f5e;
+  --color-rose-950: #4c0519;
+  --color-rose-900: #881337;
+
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-stone-950);
+  color: var(--color-stone-200);
+  font-family: var(--font-sans);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-stone-700); border-radius: 4px; }
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideRight {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.animate-fade-up  { animation: fadeUp  0.45s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.animate-fade-in  { animation: fadeIn  0.3s ease forwards; opacity: 0; }
+.animate-scale-in { animation: scaleIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards; opacity: 0; }
+.animate-bar      { animation: slideRight 0.8s cubic-bezier(0.16,1,0.3,1) forwards; transform-origin: left; }
+
+.delay-75  { animation-delay: 75ms;  }
+.delay-150 { animation-delay: 150ms; }
+.delay-225 { animation-delay: 225ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-375 { animation-delay: 375ms; }
+.delay-450 { animation-delay: 450ms; }
+.delay-525 { animation-delay: 525ms; }

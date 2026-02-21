@@ -1,6 +1,19 @@
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading) router.replace(user ? "/invoices" : "/login");
+  }, [user, isLoading, router]);
+
   return (
-    <h1 className="p-6 bg-amber-700 rounded-2xl m-5 border-8">hello world</h1>
+    <div className="min-h-screen bg-stone-950 flex items-center justify-center">
+      <div className="w-5 h-5 border border-stone-600 border-t-amber-400 rounded-full animate-spin" />
+    </div>
   );
 }
