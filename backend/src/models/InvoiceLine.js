@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const invoiceLineSchema = new mongoose.Schema(
   {
     invoiceId: {
@@ -27,11 +28,5 @@ const invoiceLineSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-
-invoiceLineSchema.pre("save", function (next) {
-  this.lineTotal = parseFloat((this.quantity * this.unitPrice).toFixed(2));
-  next();
-});
 
 export default mongoose.model("InvoiceLine", invoiceLineSchema);

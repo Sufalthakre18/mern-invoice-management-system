@@ -1,7 +1,7 @@
-import Invoice from "../models/Invoice";
-import InvoiceLine from "../models/InvoiceLine";
-import Payment from "../models/Payment";
-import generateInvoicePDF from "../utils/pdfGenerator";
+import Invoice from "../models/Invoice.js";
+import InvoiceLine from "../models/InvoiceLine.js";
+import Payment from "../models/Payment.js";
+import generateInvoicePDF from "../utils/pdfGenerator.js";
 
 const EXCHANGE_RATES = {
   INR: 1,
@@ -67,7 +67,7 @@ const getInvoiceById = async (req, res) => {
       return res.status(404).json({ message: "Invoice not found" });
     }
 
-    
+
     checkOverdue(invoice);
     await invoice.save();
 
@@ -114,6 +114,16 @@ const createInvoice = async (req, res) => {
     if (!invoiceNumber || !customerName || !issueDate || !dueDate) {
       return res.status(400).json({ message: "Required fields missing" });
     }
+    const exists = await Invoice.findOne({
+      invoiceNumber,
+      createdBy: req.user._id,
+    });
+
+    if (exists) {
+      return res.status(400).json({
+        message: "Invoice number already exists",
+      });
+    }
 
     const invoice = await Invoice.create({
       invoiceNumber,
@@ -127,7 +137,7 @@ const createInvoice = async (req, res) => {
       createdBy: req.user._id,
     });
 
-  
+
     if (lineItems && lineItems.length > 0) {
       for (const item of lineItems) {
         await InvoiceLine.create({
@@ -135,6 +145,7 @@ const createInvoice = async (req, res) => {
           description: item.description,
           quantity: item.quantity,
           unitPrice: item.unitPrice,
+          lineTotal: parseFloat((item.quantity * item.unitPrice).toFixed(2)),
         });
       }
 
@@ -145,6 +156,7 @@ const createInvoice = async (req, res) => {
 
     res.status(201).json({ message: "Invoice created", invoice });
   } catch (error) {
+    console.error("FULL ERROR:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -163,7 +175,7 @@ const addPayment = async (req, res) => {
       return res.status(404).json({ message: "Invoice not found" });
     }
 
-   
+
     if (!amount || amount <= 0) {
       return res
         .status(400)
@@ -176,7 +188,7 @@ const addPayment = async (req, res) => {
       });
     }
 
-  
+
     const payment = await Payment.create({
       invoiceId: invoice._id,
       amount,
@@ -314,7 +326,7 @@ const convertCurrency = async (req, res) => {
   }
 };
 
-export default InvoiceController = {
+const InvoiceController = {
   getAllInvoices,
   getInvoiceById,
   createInvoice,
@@ -324,3 +336,5 @@ export default InvoiceController = {
   downloadInvoicePDF,
   convertCurrency,
 };
+
+export default InvoiceController
