@@ -1,6 +1,6 @@
 # Invoice Management System
 
-A full-stack invoice management application built with the MERN stack for the Meru Technosoft Full Stack Development Internship Assignment.
+A full-stack invoice management application built with the MERN stack.
 
 ## 🔗 Live Demo
 
