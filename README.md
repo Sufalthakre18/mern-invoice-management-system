@@ -20,7 +20,7 @@ A full-stack invoice management application built with the MERN stack.
 
 ---
 
-## 📋 Assignment Coverage
+
 
 ### ✅ Core Requirements
 
